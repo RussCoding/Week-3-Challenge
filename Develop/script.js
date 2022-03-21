@@ -1,7 +1,7 @@
 // Assignment code here
 // Variables for password character types and list of questions
 var lowercase = "abcdefghijklmnopqrstuvwxyz".split("");
-var numString = ["0","1","2","3","4","5","6","7","8","9"]
+var numString = ["0","1","2","3","4","5","6","7","8","9"];
 var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 var specials = [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/",":", 
   ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
@@ -13,6 +13,7 @@ var questionsArr = ["Would you like to include lowercase letters?",
                   ];
 var charTypes = [lowercase, uppercase, numString, specials];
 var validChar = [];
+var passWord1 = "";
 
 
 var input = document.createElement("input");
@@ -36,16 +37,20 @@ function writePassword()
       var validAns = false;
       while (validAns === false) 
       {
-        validAns = false;
         var ans = prompt(questionsArr[q]);
         if ((ans.toUpperCase() === "YES" || ans.toUpperCase() === "Y") && q<4)
           {
             validAns = true;
-            validChar.concat(charTypes[q]);
+            validChar.push(charTypes[q]);
           }
         else if ((ans.toUpperCase() === "NO" || ans.toUpperCase() === "N") && q<4)
           {
             validAns = true;
+          }
+        else if (validChar.length === 0 && q === 4)
+          {
+            alert("Please choose at least one character type");
+            q = 0;
           }
         else if (q === 4 && Number(ans) > 7  && Number(ans) < 129)
           {
@@ -54,7 +59,36 @@ function writePassword()
           }
         
       }
+    }
 
+  
+
+  
+  var password = generatePassword(passLength);
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
+
+}
+
+
+function generatePassword(size)
+{
+  var pass = "";
+  var letters = validChar.flat;
+  for (let i = 0; i < size; i++)
+  {
+    var num = Math.floor(Math.random() * (letters.length + 1));
+    pass = pass.concat(chars[num])
+  }
+  pass = pass.toString("");
+  return pass;
+}
+// Add event listener to generate button
+
+generateBtn.addEventListener("click", writePassword);
+
+
+      //  first try
       // loop to stay on the same question until valid answer is input
       // while (validAns === false)
       // {
@@ -81,21 +115,3 @@ function writePassword()
       //       }
       //   }
       // }
-  }
-  
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password;
-
-}
-
-
-function generatePassword(){
-  return "password";
-
-}
-// Add event listener to generate button
-
-generateBtn.addEventListener("click", writePassword);
-
-
