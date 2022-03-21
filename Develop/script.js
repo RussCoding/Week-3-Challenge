@@ -38,20 +38,24 @@ function writePassword()
       while (validAns === false) 
       {
         var ans = prompt(questionsArr[q]);
+        //checks for yes or y in answer and adds that type to validChar
         if ((ans.toUpperCase() === "YES" || ans.toUpperCase() === "Y") && q<4)
           {
             validAns = true;
             validChar.push(charTypes[q]);
           }
+          // moves to next question if no
         else if ((ans.toUpperCase() === "NO" || ans.toUpperCase() === "N") && q<4)
           {
             validAns = true;
           }
+        // checks for at least one type. 
         else if (validChar.length === 0 && q === 4)
           {
             alert("Please choose at least one character type");
             q = 0;
           }
+          //checks for the last question and allows an answer between 8-128
         else if (q === 4 && Number(ans) > 7  && Number(ans) < 129)
           {
             validAns = true;
@@ -73,14 +77,16 @@ function writePassword()
 
 function generatePassword(size)
 {
+  // flattens validChars array and chooses a random character from any character type
   var pass = "";
-  var letters = validChar.flat;
+  var letters = validChar.flat();
   for (let i = 0; i < size; i++)
   {
     var num = Math.floor(Math.random() * (letters.length + 1));
-    pass = pass.concat(chars[num])
+    pass = pass.concat(letters[num]);
   }
-  pass = pass.toString("");
+  //changes pass from array to string
+  pass = pass.toString();
   return pass;
 }
 // Add event listener to generate button
