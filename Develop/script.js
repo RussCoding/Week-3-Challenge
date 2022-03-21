@@ -28,40 +28,59 @@ var answerArea = document.querySelector(".card-body");
 var passLength = 0;
 
 // Write password to the #password input
-function writePassword() {
-  answerArea.appendChild(input);
+function writePassword() 
+{ 
   // loop for answering each question
   for (let q = 0; q < questionsArr.length; q++)
   {
-      question.value = questionsArr[q];
-      
       var validAns = false;
-      // loop to stay on the same question until valid answer is input
-      while (validAns === false) {
-        //Checks for yes or know for all yes or no questions
-        if (q >= 0 && q < 4)
-        {
-          if (input.value.toUpperCase === "YES" || input.value.toUpperCase === "Y")
+      while (validAns === false) 
+      {
+        validAns = false;
+        var ans = prompt(questionsArr[q]);
+        if ((ans.toUpperCase() === "YES" || ans.toUpperCase() === "Y") && q<4)
           {
             validAns = true;
             validChar.concat(charTypes[q]);
           }
-          else if (input.value.toUpperCase === "NO" || input.value.toUpperCase === "N")
+        else if ((ans.toUpperCase() === "NO" || ans.toUpperCase() === "N") && q<4)
           {
             validAns = true;
           }
-        }
-        //case for last question where a number between 8-128 is needed
-        else
-        {
-          var ans = parseInt(input.value);
-          if (8 >= ans <= 128)
-            {
-              validAns = true;
-              passLength = ans;
-            }
-        }
+        else if (q === 4 && Number(ans) > 7  && Number(ans) < 129)
+          {
+            validAns = true;
+            passLength = ans;
+          }
+        
       }
+
+      // loop to stay on the same question until valid answer is input
+      // while (validAns === false)
+      // {
+      //   //Checks for yes or know for all yes or no questions
+      //   if (q >= 0 && q < 4)
+      //   {
+      //     if (ans.toUpperCase === "YES" || ans.toUpperCase === "Y")
+      //     {
+      //       validAns = true;
+      //       validChar.concat(charTypes[q]);
+      //     }
+      //     else if (ans.toUpperCase === "NO" || ans.toUpperCase === "N")
+      //     {
+      //       validAns = true;
+      //     }
+      //   }
+      //   //case for last question where a number between 8-128 is needed
+      //   else
+      //   {
+      //     if (8 >= parseInt(ans) <= 128)
+      //       {
+      //         validAns = true;
+      //         passLength = ans;
+      //       }
+      //   }
+      // }
   }
   
   var password = generatePassword();
@@ -76,4 +95,7 @@ function generatePassword(){
 
 }
 // Add event listener to generate button
+
 generateBtn.addEventListener("click", writePassword);
+
+
