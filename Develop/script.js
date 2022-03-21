@@ -13,7 +13,6 @@ var questionsArr = ["Would you like to include lowercase letters?",
                   ];
 var charTypes = [lowercase, uppercase, numString, specials];
 var validChar = [];
-var passWord1 = "";
 
 
 var input = document.createElement("input");
